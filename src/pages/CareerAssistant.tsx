@@ -58,11 +58,38 @@ const CareerAssistant = () => {
     }
     setUserId(uid);
 
-    // send initial greeting
-    const greeting =
-      "Hi 👋 I'm your AI Task Coach. I'm here to understand how you work, help you break down overwhelming tasks, and catch burnout before it happens. Let's chat so I can give you personalized support that actually fits your ADHD brain or Normal Brain. Are you ready so that we start?";
-    setMessages([{ sender: "assistant", message: greeting }]);
+    // try to restore conversation state from localStorage
+    const savedMessages = localStorage.getItem("chat_messages");
+    const savedQuestionIndex = localStorage.getItem("question_index");
+    const savedResponses = localStorage.getItem("responses");
+    const savedComplete = localStorage.getItem("conversation_complete");
+
+    if (savedMessages && savedQuestionIndex !== null && savedResponses) {
+      console.log("♻️ Restoring conversation from localStorage...");
+      setMessages(JSON.parse(savedMessages));
+      setQuestionIndex(parseInt(savedQuestionIndex));
+      setResponses(JSON.parse(savedResponses));
+      setConversationComplete(savedComplete === "true");
+    } else {
+      console.log("🆕 Starting fresh conversation...");
+      // send initial greeting
+      const greeting =
+        "Hi 👋 I'm your AI Task Coach. I'm here to understand how you work, help you break down overwhelming tasks, and catch burnout before it happens. Let's chat so I can give you personalized support that actually fits your ADHD brain or Normal Brain. Are you ready so that we start?";
+      setMessages([{ sender: "assistant", message: greeting }]);
+    }
   }, []);
+
+  // auto-save conversation state to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem("chat_messages", JSON.stringify(messages));
+    localStorage.setItem("question_index", questionIndex.toString());
+    localStorage.setItem("responses", JSON.stringify(responses));
+    localStorage.setItem(
+      "conversation_complete",
+      conversationComplete.toString(),
+    );
+    console.log("💾 Conversation state saved to localStorage");
+  }, [messages, questionIndex, responses, conversationComplete]);
 
   // helper used only to persist the final aggregated prompt later
   const submitFinalPrompt = async (combined: string) => {
@@ -170,7 +197,17 @@ const CareerAssistant = () => {
                 tailored to your ADHD brain or Normal Brain.
               </p>
               <button
-                onClick={() => navigate("/")}
+                onClick={() => {
+                  // clear conversation state for fresh start on next visit
+                  localStorage.removeItem("chat_messages");
+                  localStorage.removeItem("question_index");
+                  localStorage.removeItem("responses");
+                  localStorage.removeItem("conversation_complete");
+                  console.log(
+                    "🗑️ Cleared conversation state from localStorage",
+                  );
+                  navigate("/");
+                }}
                 className="w-full px-4 py-3 bg-primary text-primary-foreground rounded-xl font-bold hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-primary/20"
                 data-testid="button-back-home"
               >
