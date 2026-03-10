@@ -24,6 +24,7 @@ const Assessment = () => {
     try {
       const response = await fetch(
         "https://career-compass-backend-y6fl.onrender.com/api/career-submit",
+        // "http://localhost:5000/api/career-submit",
         {
           method: "POST",
           headers: {
