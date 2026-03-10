@@ -19,10 +19,15 @@ app.listen(PORT, () => {
 // Middleware
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://localhost:8080"],
+    origin: ["https://compass-silk.vercel.app", "http://localhost:8080"],
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type"],
     credentials: true,
   }),
 );
+
+app.options("*", cors());
+
 app.use(express.json());
 // Health check
 app.get("/api/health", (req, res) => {
