@@ -60,7 +60,7 @@ const CareerAssistant = () => {
 
     // send initial greeting
     const greeting =
-      "Hi 👋 I'm your AI Task Coach. I'm here to understand how you work, help you break down overwhelming tasks, and catch burnout before it happens. Let's chat so I can give you personalized support that actually fits your ADHD brain or Normal Brain.";
+      "Hi 👋 I'm your AI Task Coach. I'm here to understand how you work, help you break down overwhelming tasks, and catch burnout before it happens. Let's chat so I can give you personalized support that actually fits your ADHD brain or Normal Brain. Are you ready so that we start?";
     setMessages([{ sender: "assistant", message: greeting }]);
   }, []);
 
