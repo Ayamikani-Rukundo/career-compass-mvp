@@ -8,6 +8,9 @@ const { google } = require("googleapis");
 /**
  * Authenticate with Google using service account credentials
  */
+console.log("EMAIL:", process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL);
+console.log("KEY EXISTS:", !!process.env.GOOGLE_PRIVATE_KEY);
+
 function getAuthClient() {
   console.log("PRIVATE KEY START:");
   console.log(process.env.GOOGLE_PRIVATE_KEY?.slice(0, 30));
