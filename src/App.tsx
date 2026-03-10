@@ -8,6 +8,8 @@ import Index from "./pages/Index";
 import Assessment from "./pages/Assessment";
 import Success from "./pages/Success";
 import NotFound from "./pages/NotFound";
+import AssistantIntro from "./pages/AssistantIntro";
+import CareerAssistant from "./pages/CareerAssistant";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +24,8 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/assessment" element={<Assessment />} />
             <Route path="/success" element={<Success />} />
+            <Route path="/assistant" element={<AssistantIntro />} />
+            <Route path="/career-assistant" element={<CareerAssistant />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
