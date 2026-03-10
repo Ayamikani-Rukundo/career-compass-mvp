@@ -16,6 +16,9 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
+console.log("EMAIL:", process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL);
+console.log("KEY EXISTS:", !!process.env.GOOGLE_PRIVATE_KEY);
+
 // Middleware
 app.use(
   cors({
