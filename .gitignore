@@ -28,3 +28,4 @@ dist-ssr
 
 # Google credentials (keep this ignored)
 google-credentials.json
+backend/google-credentials.json
