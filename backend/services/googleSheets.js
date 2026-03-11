@@ -4,24 +4,18 @@
  */
 
 const { google } = require("googleapis");
+const path = require("path");
 
 /**
- * Authenticate with Google using service account credentials
+ * Authenticate with Google using service account JSON file
  */
-console.log("EMAIL:", process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL);
-console.log("KEY EXISTS:", !!process.env.GOOGLE_PRIVATE_KEY);
-
 function getAuthClient() {
-  console.log("PRIVATE KEY START:");
-  console.log(process.env.GOOGLE_PRIVATE_KEY?.slice(0, 30));
-  console.log("PRIVATE KEY END:");
   try {
-    const auth = new google.auth.JWT(
-      process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-      null,
-      process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, "\n"),
-      ["https://www.googleapis.com/auth/spreadsheets"],
-    );
+    const auth = new google.auth.GoogleAuth({
+      keyFile: path.join(__dirname, "../google-credentials.json"),
+      scopes: ["https://www.googleapis.com/auth/spreadsheets"],
+    });
+
     return auth;
   } catch (err) {
     console.error("AUTH ERROR:", err);
@@ -31,10 +25,10 @@ function getAuthClient() {
 
 /**
  * Append assessment data to Google Sheets
- * @param {Object} data - The validated assessment form data
  */
 async function submitToSheets(data) {
   console.log("Scale inside Sheets:", data.creativeAnalyticalScale);
+
   const auth = getAuthClient();
   const sheets = google.sheets({ version: "v4", auth });
 
@@ -55,7 +49,6 @@ async function submitToSheets(data) {
     impactImportance,
   } = data;
 
-  // Format arrays as comma-separated strings for the spreadsheet
   const formatField = (value) => {
     if (Array.isArray(value)) return value.join(", ");
     if (typeof value === "string") return value;
@@ -83,12 +76,14 @@ async function submitToSheets(data) {
 
   await sheets.spreadsheets.values.append({
     spreadsheetId: process.env.GOOGLE_SHEET_ID,
-    range: "Sheet1!A:P", // Columns A through P
+    range: "Sheet1!A:P",
     valueInputOption: "USER_ENTERED",
     requestBody: {
       values: [row],
     },
   });
+
+  console.log("Data successfully written to Google Sheets.");
 }
 
 module.exports = { submitToSheets };
