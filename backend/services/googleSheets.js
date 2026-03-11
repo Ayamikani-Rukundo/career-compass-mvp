@@ -4,15 +4,16 @@
  */
 
 const { google } = require("googleapis");
-const path = require("path");
 
 /**
- * Authenticate with Google using service account JSON file
+ * Authenticate with Google using credentials stored in Render environment variable
  */
 function getAuthClient() {
   try {
+    const credentials = JSON.parse(process.env.GOOGLE_CREDENTIALS);
+
     const auth = new google.auth.GoogleAuth({
-      keyFile: path.join(__dirname, "../google-credentials.json"),
+      credentials: credentials,
       scopes: ["https://www.googleapis.com/auth/spreadsheets"],
     });
 
