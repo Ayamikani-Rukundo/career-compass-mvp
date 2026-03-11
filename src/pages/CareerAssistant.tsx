@@ -197,21 +197,31 @@ const CareerAssistant = () => {
                 tailored to your ADHD brain or Normal Brain.
               </p>
               <button
+                onClick={() => navigate("/feedback?from=chat")}
+                className="w-full px-4 py-3 bg-primary text-primary-foreground rounded-xl font-bold hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-primary/20 mb-2"
+                data-testid="button-give-feedback"
+              >
+                Share My Feedback 💬
+              </button>
+
+              <button
                 onClick={() => {
                   // clear conversation state for fresh start on next visit
                   localStorage.removeItem("chat_messages");
                   localStorage.removeItem("question_index");
                   localStorage.removeItem("responses");
                   localStorage.removeItem("conversation_complete");
+
                   console.log(
                     "🗑️ Cleared conversation state from localStorage",
                   );
+
                   navigate("/");
                 }}
-                className="w-full px-4 py-3 bg-primary text-primary-foreground rounded-xl font-bold hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-primary/20"
+                className="w-full text-xs text-muted-foreground hover:text-foreground underline underline-offset-2 transition-colors"
                 data-testid="button-back-home"
               >
-                Back to Home
+                Skip — Back to Home
               </button>
             </div>
           )}
