@@ -87,7 +87,7 @@ const Step5Review = ({ data, onBack, onSubmit, isSubmitting }: Props) => {
           {isSubmitting ? (
             <>
               <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-              Submitting...
+              Submitting... (Don't leave, this might take a while)
             </>
           ) : (
             "Submit Assessment"
