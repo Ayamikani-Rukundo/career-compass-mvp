@@ -74,7 +74,7 @@ const CareerAssistant = () => {
       console.log("🆕 Starting fresh conversation...");
       // send initial greeting
       const greeting =
-        "Hi 👋 I'm your AI Task Coach. I'm here to understand how you work, help you break down overwhelming tasks, and catch burnout before it happens. Let's chat so I can give you personalized support that actually fits your ADHD brain or Normal Brain. Are you ready so that we start?";
+        "Hi 👋 I'm your AI Task Coach. I'm here to understand how you work, help you break down overwhelming tasks, and catch burnout before it happens. I can give you personalized support that actually fits your ADHD brain or Normal Brain. Caution: Right now, I am not going to behave like a real AI, so just answer some few questions below, and then we shall come back to you letter on email.";
       setMessages([{ sender: "assistant", message: greeting }]);
     }
   }, []);

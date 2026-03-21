@@ -8,6 +8,10 @@ interface ChatMessageProps {
 const ChatMessage = ({ sender, message }: ChatMessageProps) => {
   const isUser = sender === "user";
 
+  // Check if the message contains "Caution:" to highlight it
+  const cautionIndex = message.indexOf("Caution:");
+  const hasCaution = cautionIndex !== -1;
+
   return (
     <div className={cn("flex mb-4", isUser ? "justify-end" : "justify-start")}>
       <div
@@ -19,7 +23,16 @@ const ChatMessage = ({ sender, message }: ChatMessageProps) => {
         )}
       >
         <p className="text-sm leading-relaxed whitespace-pre-wrap break-words">
-          {message}
+          {hasCaution ? (
+            <>
+              {message.slice(0, cautionIndex)}
+              <span className="bg-yellow-200 text-black font-semibold px-1 rounded">
+                {message.slice(cautionIndex)}
+              </span>
+            </>
+          ) : (
+            message
+          )}
         </p>
       </div>
     </div>
